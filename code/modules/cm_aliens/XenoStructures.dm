@@ -3,7 +3,7 @@
  */
 /obj/effect/alien
 	name = "alien thing"
-	desc = "There's something alien about this."
+	desc = "В этом есть что-то инопланетное."
 	icon = 'icons/mob/xenos/effects.dmi'
 	unacidable = TRUE
 	health = 1
@@ -14,7 +14,7 @@
  */
 /obj/effect/alien/resin
 	name = "resin"
-	desc = "Looks like some kind of slimy growth."
+	desc = "Похоже на какую-то слизистую опухоль."
 	icon_state = "weeds"
 	anchored = TRUE
 	health = 200
@@ -64,8 +64,8 @@
 	..()
 	if(istype(AM,/mob/living/carbon/xenomorph))
 		return
-	visible_message(SPAN_DANGER("\The [src] was hit by \the [AM]."),
-	SPAN_DANGER("You hit \the [src]."))
+	// visible_message(SPAN_DANGER("[capitalize(src.declent_ru(NOMINATIVE))] был поражен [AM.declent_ru(INSTRUMENTAL)]."),
+	// SPAN_DANGER("Вы ударили [src.declent_ru(NOMINATIVE)]."))
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
@@ -86,8 +86,8 @@
 		return XENO_NO_DELAY_ACTION
 	else
 		M.animation_attack_on(src)
-		M.visible_message(SPAN_XENONOTICE("\The [M] claws \the [src]!"),
-		SPAN_XENONOTICE("We claw \the [src]."))
+		M.visible_message(SPAN_XENONOTICE("[capitalize(M.declent_ru(NOMINATIVE))] царапает [src.declent_ru(ACCUSATIVE)]!"),
+		SPAN_XENONOTICE("Мы царапаем [src.declent_ru(ACCUSATIVE)]."))
 		if(istype(src, /obj/effect/alien/resin/sticky))
 			playsound(loc, "alien_resin_move", 25)
 		else
@@ -103,8 +103,8 @@
 	return XENO_ATTACK_ACTION
 
 /obj/effect/alien/resin/attack_animal(mob/living/M as mob)
-	M.visible_message(SPAN_DANGER("[M] tears \the [src]!"),
-	SPAN_DANGER("You tear \the [name]."))
+	M.visible_message(SPAN_DANGER("[capitalize(M.declent_ru(NOMINATIVE))] разрывает [src.declent_ru(ACCUSATIVE)]!"),
+	SPAN_DANGER("Вы разрываете [src.declent_ru(ACCUSATIVE)]."))
 	if(istype(src, /obj/effect/alien/resin/sticky))
 		playsound(loc, "alien_resin_move", 25)
 	else
@@ -113,7 +113,7 @@
 	healthcheck()
 
 /obj/effect/alien/resin/attack_hand()
-	to_chat(usr, SPAN_WARNING("You scrape ineffectively at \the [src]."))
+	to_chat(usr, SPAN_WARNING("Вы неэффективно скребете по [src.declent_ru(DATIVE)]."))
 
 /obj/effect/alien/resin/attackby(obj/item/W, mob/user)
 	if(!(W.flags_item & NOBLUDGEON))
@@ -149,7 +149,7 @@
 
 /obj/effect/alien/resin/sticky
 	name = "sticky resin"
-	desc = "A layer of disgusting sticky slime."
+	desc = "Слой отвратительной липкой слизи."
 	icon_state = "sticky"
 	density = FALSE
 	opacity = FALSE
@@ -188,7 +188,7 @@
 
 /obj/effect/alien/resin/spike
 	name = "resin spike"
-	desc = "A small cluster of bone spikes. Ouch."
+	desc = "Небольшая кучка костяных шипов. Ау."
 	icon = 'icons/obj/structures/alien/structures.dmi'
 	icon_state = "resin_spike"
 	density = FALSE
@@ -239,14 +239,14 @@
 // Praetorian Sticky Resin spit uses this.
 /obj/effect/alien/resin/sticky/thin
 	name = "thin sticky resin"
-	desc = "A thin layer of disgusting sticky slime."
+	desc = "Тонкий слой отвратительной липкой слизи."
 	health = 7
 	slow_amt = 4
 
 // Gardener drone uses this.
 /obj/effect/alien/resin/sticky/thin/weak
 	name = "Weak sticky resin"
-	desc = "A thin and weak layer of disgusting sticky slime. It looks like it's already melting..."
+	desc = "Тонкий и слабый слой отвратительной липкой слизи. Похоже, она уже начинает плавиться..."
 	var/duration = 20 SECONDS
 
 /obj/effect/alien/resin/sticky/thin/weak/Initialize(...)
@@ -255,7 +255,7 @@
 
 /obj/effect/alien/resin/sticky/fast
 	name = "fast resin"
-	desc = "A layer of disgusting sleek slime."
+	desc = "Слой отвратительной гладкой слизи."
 	icon_state = "fast"
 	health = HEALTH_RESIN_XENO_FAST
 	var/speed_amt = 0.7
@@ -267,7 +267,7 @@
 //xeno marker :0)
 /obj/effect/alien/resin/marker
 	name = "Resin Mark"
-	desc = "Something has made its mark on the world, and there it is..."
+	desc = "Что-то оставило свой след в этом мире, и вот он..."
 	icon = 'icons/mob/hud/xeno_markers.dmi'
 	icon_state = "marker_nub"
 	health = HEALTH_RESIN_XENO_SPIKE
@@ -338,7 +338,7 @@
 		if(X.nicknumber == createdby)
 			xeno_createdby = X
 	if(isxeno(user) || isobserver(user))
-		. += "[mark_meaning.desc], ordered by [xeno_createdby.name]"
+		. += "[mark_meaning.desc], оставлено [xeno_createdby.declent_ru(INSTRUMENTAL)]"
 
 /obj/effect/alien/resin/marker/attack_alien(mob/living/carbon/xenomorph/M)
 	if(M.hive_pos == 1 || M.nicknumber == createdby)
@@ -403,7 +403,7 @@
 	if(!(W.flags_item & NOBLUDGEON) && W.force)
 		user.animation_attack_on(src)
 		health -= W.force * RESIN_MELEE_DAMAGE_MULTIPLIER * W.demolition_mod
-		to_chat(user, "You hit the [name] with your [W.name]!")
+		to_chat(user, "Вы ударили [src.declent_ru(ACCUSATIVE)] своим [W.declent_ru(INSTRUMENTAL)]!")
 		playsound(loc, "alien_resin_move", 25)
 		healthcheck()
 		return ATTACKBY_HINT_UPDATE_NEXT_MOVE
@@ -534,7 +534,7 @@
 			. = 1
 			break
 	if(!.)
-		visible_message(SPAN_NOTICE("[src] collapses from the lack of support."))
+		visible_message(SPAN_NOTICE("[capitalize(src.declent_ru(NOMINATIVE))] рушится от отсутствия поддержки."))
 		qdel(src)
 
 /obj/structure/mineral_door/resin/proc/forsaken_handling()
@@ -553,7 +553,7 @@
 
 /obj/effect/alien/resin/acid_pillar
 	name = "acid pillar"
-	desc = "A resin pillar that is oozing with acid."
+	desc = "Столб из смолы, который выделяет кислоту."
 	icon = 'icons/obj/structures/alien/structures.dmi'
 	icon_state = "acid_pillar_idle"
 
@@ -677,7 +677,7 @@
 
 /obj/effect/alien/resin/acid_pillar/strong
 	name = "acid pillar"
-	desc = "A resin pillar that is oozing with acid."
+	desc = "Столб из смолы, который выделяет кислоту."
 	icon = 'icons/obj/structures/alien/structures64x64.dmi'
 	icon_state = "resin_pillar_strong"
 
@@ -689,7 +689,7 @@
 
 /obj/effect/alien/resin/shield_pillar
 	name = "shield pillar"
-	desc = "A resin pillar that is oozing with acid."
+	desc = "Столб из смолы, который выделяет кислоту."
 	icon = 'icons/obj/structures/alien/structures64x64.dmi'
 	icon_state = "pillar_shield"
 
@@ -725,7 +725,7 @@
 
 /obj/effect/alien/resin/resin_pillar
 	name = "resin pillar"
-	desc = "This massive structure arose out of some weeds coating the ground, somehow... It seems to be doing nothing but blocking the way."
+	desc = "Эта огромная структура возникла из каких-то сорняков, покрывающих землю, как-то... Похоже, она только блокирует путь."
 	health = HEALTH_RESIN_PILLAR
 	var/vulnerable_health = HEALTH_RESIN_PILLAR
 	icon = 'icons/obj/structures/alien/structures96x96.dmi'
@@ -752,7 +752,7 @@
 	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 25, FALSE)
 	if(mapload) //this should never be called in mapload, but in case it is
 		name = "calcified resin pillar"
-		desc = "This massive structure seems to be inert."
+		desc = "Эта огромная структура кажется неактивной."
 
 	var/turf/closed/wall/T
 	for(var/i in locs)
@@ -811,7 +811,7 @@
 
 /obj/effect/alien/resin/resin_pillar/proc/brittle()
 	//playsound(granite cracking)
-	visible_message(SPAN_DANGER("You hear cracking sounds from [src] as splinters start falling off from the structure! It seems brittle now."))
+	visible_message(SPAN_DANGER("Вы слышите треск от [src.declent_ru(GENITIVE)], когда с него начинают падать осколки! Оно кажется хрупким сейчас."))
 	health = vulnerable_health
 	for(var/i in walls)
 		var/turf/closed/wall/T = i
@@ -833,9 +833,9 @@
 /obj/effect/alien/resin/resin_pillar/proc/collapse(decayed = FALSE)
 	//playsound granite collapsing
 	if(decayed)
-		visible_message(SPAN_DANGER("[src]'s failing structure suddenly collapses!"))
+		visible_message(SPAN_DANGER("Непрочная структура [src.declent_ru(NOMINATIVE)] внезапно разрушается!"))
 	else
-		visible_message(SPAN_DANGER("[src]'s structure collapses under the blow!"))
+		visible_message(SPAN_DANGER("Стуруктура [src.declent_ru(NOMINATIVE)] разрушается под ударом!"))
 
 	playsound(loc, "alien_resin_break", 25, TRUE)
 	qdel(src)
@@ -844,7 +844,7 @@
 
 /obj/effect/alien/resin/resin_pillar/hitby(atom/movable/AM)
 	if(!brittle)
-		visible_message(SPAN_DANGER("[AM] harmlessly bounces off [src]!"))
+		visible_message(SPAN_DANGER("[capitalize(AM.declent_ru(NOMINATIVE))] безвредно отскакивает от [src.declent_ru(GENITIVE)]!"))
 		return
 	return ..()
 
@@ -852,8 +852,8 @@
 /obj/effect/alien/resin/resin_pillar/attack_alien(mob/living/carbon/xenomorph/M)
 	if(!brittle)
 		M.animation_attack_on(src)
-		M.visible_message(SPAN_XENONOTICE("\The [M] claws \the [src], but the slash bounces off!"),
-		SPAN_XENONOTICE("You claw \the [src], but the slash bounces off!"))
+		M.visible_message(SPAN_XENONOTICE("[capitalize(M.declent_ru(NOMINATIVE))] царапает [src.declent_ru(ACCUSATIVE)], но удар отскакивает!"),
+		SPAN_XENONOTICE("Вы царапаете [src.declent_ru(ACCUSATIVE)], но удар отскакивает!"))
 		return XENO_ATTACK_ACTION
 
 	return ..()
@@ -861,15 +861,15 @@
 /obj/effect/alien/resin/resin_pillar/attackby(obj/item/W, mob/living/user)
 	user.animation_attack_on(src)
 	if(!brittle)
-		user.visible_message(SPAN_DANGER("[user] hits \the [src], but \the [W] bounces off!"),
-			SPAN_DANGER("You hit \the [name], but \the [W] bounces off!"))
+		user.visible_message(SPAN_DANGER("[user.declent_ru(NOMINATIVE)] бьет [src.declent_ru(ACCUSATIVE)], но [W.declent_ru(NOMINATIVE)] отскакивает!"),
+			SPAN_DANGER("Вы ударяете [src.declent_ru(ACCUSATIVE)], но [W.declent_ru(NOMINATIVE)] отскакивает!"))
 		return
 
 	return ..()
 
 /obj/effect/alien/resin/king_cocoon
 	name = "alien cocoon"
-	desc = "A large pulsating cocoon."
+	desc = "Большой пульсирующий кокон."
 	icon = 'icons/obj/structures/alien/xenoKingHatchery.dmi'
 	icon_state = "static"
 	health = 4000
@@ -899,16 +899,16 @@
 
 /obj/effect/alien/resin/king_cocoon/Destroy()
 	if(!hatched)
-		marine_announcement("ВНИМАНИЕ.\n\nНЕОБЫЧНОЕ НАКОПЛЕНИЕ ЭНЕРГИИ В [uppertext(get_area_name(loc))] БЫЛО ОСТАНОВЛЕНО.", "[MAIN_AI_SYSTEM]: Биологический сканер", 'sound/misc/notice1.ogg')
+		marine_announcement("ВНИМАНИЕ.\n\nНЕОБЫЧНОЕ НАКОПЛЕНИЕ ЭНЕРГИИ В [uppertext(get_area_name(loc))] БЫЛО ОСТАНОВЛЕНО.", "[MAIN_AI_SYSTEM]: Биологическое сканирование", 'sound/misc/notice1.ogg')
 		var/datum/hive_status/hive
 		for(var/cur_hive_num in GLOB.hive_datum)
 			hive = GLOB.hive_datum[cur_hive_num]
 			if(!length(hive.totalXenos))
 				continue
 			if(cur_hive_num == hive_number)
-				xeno_announcement(SPAN_XENOANNOUNCE("НАШЕ ГНЕЗДО УНИЧТОЖЕНО! МЫ ОТОМСТИМ!"), cur_hive_num, XENO_GENERAL_ANNOUNCE)
+				xeno_announcement(SPAN_XENOANNOUNCE("ИНКУБАТОР БЫЛ УНИЧТОЖЕН! МЫ ОТОМСТИМ!"), cur_hive_num, XENO_GENERAL_ANNOUNCE)
 			else
-				xeno_announcement(SPAN_XENOANNOUNCE("НАШЕ ГНЕЗДО УНИЧТОЖЕНО!"), cur_hive_num, XENO_GENERAL_ANNOUNCE)
+				xeno_announcement(SPAN_XENOANNOUNCE("ИНКУБАТОР БЫЛ УНИЧТОЖЕН!"), cur_hive_num, XENO_GENERAL_ANNOUNCE)
 
 	var/datum/hive_status/hive = GLOB.hive_datum[hive_number]
 	hive.has_hatchery = FALSE
@@ -939,7 +939,7 @@
 
 	START_PROCESSING(SSobj, src)
 
-	marine_announcement("ВНИМАНИЕ.\n\nБЫЛО ОБНАРУЖЕНО НЕОБЫЧНОЕ НАКОПЛЕНИЕ ЭНЕРГИИ В [uppertext(get_area_name(loc))].\n\nРАСЧЕТНОЕ ВРЕМЯ ДО ЗАВЕРШЕНИЯ - 10 МИНУТ. РЕКОМЕНДУЕТСЯ ЛИКВИДИРОВАТЬ СООРУЖЕНИЯ КСЕНОМОРФОВ В ЭТОМ УЧАСТКЕ, ИЛИ ЛИКВИДИРОВАТЬ ПИЛОН КСЕНОМОРФОВ НА ЛЮБОМ ИЗ КОММУНИКАЦИОННЫХ РЕЛЕ.", "[MAIN_AI_SYSTEM]: Биологический сканер", 'sound/misc/notice1.ogg')
+	marine_announcement("ВНИМАНИЕ.\n\nБЫЛО ОБНАРУЖЕНО НЕОБЫЧНОЕ НАКОПЛЕНИЕ ЭНЕРГИИ В [uppertext(get_area_name(loc))].\n\nРАСЧЕТНОЕ ВРЕМЯ ДО ЗАВЕРШЕНИЯ - 10 МИНУТ. РЕКОМЕНДУЕТСЯ ЛИКВИДИРОВАТЬ СООРУЖЕНИЯ КСЕНОМОРФОВ В ЭТОМ УЧАСТКЕ, ИЛИ ЛИКВИДИРОВАТЬ ПИЛОН КСЕНОМОРФОВ НА ЛЮБОМ ИЗ КОММУНИКАЦИОННЫХ РЕЛЕ.", "[MAIN_AI_SYSTEM]: Биологическое сканирование", 'sound/misc/notice1.ogg')
 	var/datum/hive_status/hive
 	for(var/cur_hive_num in GLOB.hive_datum)
 		hive = GLOB.hive_datum[cur_hive_num]
@@ -963,15 +963,15 @@
 
 	if(length(hive.active_endgame_pylons) < 2)
 		if(!announced_paused)
-			marine_announcement("ALERT.\n\nUNUSUAL ENERGY BUILDUP IN [uppertext(get_area_name(loc))] HAS BEEN PAUSED.", "[MAIN_AI_SYSTEM] Biological Scanner", 'sound/misc/notice1.ogg')
+			marine_announcement("ВНИМАНИЕ.\n\nНЕОБЫЧНОЕ НАКОПЛЕНИЕ ЭНЕРГИИ В [uppertext(get_area_name(loc))] БЫЛО ПРИОСТАНОВЛЕНО.", "[MAIN_AI_SYSTEM]: Биологическое сканирование", 'sound/misc/notice1.ogg')
 			for(var/cur_hive_num in GLOB.hive_datum)
 				hive = GLOB.hive_datum[cur_hive_num]
 				if(!length(hive.totalXenos))
 					continue
 				if(cur_hive_num == hive_number)
-					xeno_announcement(SPAN_XENOANNOUNCE("One of our pylons was destroyed, the hatchery has paused its progress!"), cur_hive_num, XENO_GENERAL_ANNOUNCE)
+					xeno_announcement(SPAN_XENOANNOUNCE("Один из наших пилонов был уничтожен, инкубация приостановлена!"), cur_hive_num, XENO_GENERAL_ANNOUNCE)
 				else
-					xeno_announcement(SPAN_XENOANNOUNCE("One of another hive's pylons was destroyed, the hatchery has paused its progress!"), cur_hive_num, XENO_GENERAL_ANNOUNCE)
+					xeno_announcement(SPAN_XENOANNOUNCE("Один из пилонов другого улья был уничтожен, инкубация приостановлена!"), cur_hive_num, XENO_GENERAL_ANNOUNCE)
 
 			announced_paused = TRUE
 			icon_state = "static"
@@ -982,10 +982,10 @@
 			if(!length(hive.totalXenos))
 				continue
 			if(cur_hive_num == hive_number)
-				xeno_announcement(SPAN_XENOANNOUNCE("The hatchery's progress has resumed!"), cur_hive_num, XENO_GENERAL_ANNOUNCE)
+				xeno_announcement(SPAN_XENOANNOUNCE("Инкубация возобновилась!"), cur_hive_num, XENO_GENERAL_ANNOUNCE)
 			else
-				xeno_announcement(SPAN_XENOANNOUNCE("Another hive's hatchery progress has resumed!"), cur_hive_num, XENO_GENERAL_ANNOUNCE)
-		marine_announcement("ALERT.\n\nUNUSUAL ENERGY BUILDUP IN [uppertext(get_area_name(loc))] HAS BEEN RESUMED.", "[MAIN_AI_SYSTEM] Biological Scanner", 'sound/misc/notice1.ogg')
+				xeno_announcement(SPAN_XENOANNOUNCE("Другой улей продолжил инкубацию!"), cur_hive_num, XENO_GENERAL_ANNOUNCE)
+		marine_announcement("ВНИМАНИЕ.\n\nНЕОБЫЧНОЕ НАКОПЛЕНИЕ ЭНЕРГИИ В [uppertext(get_area_name(loc))] ВОЗОБНОВИЛОСЬ.", "[MAIN_AI_SYSTEM]: Биологическое сканирование", 'sound/misc/notice1.ogg')
 		announced_paused = FALSE
 		icon_state = "growing"
 
@@ -1047,7 +1047,7 @@
 
 /// Causes the halfway announcements and initiates the next timer.
 /obj/effect/alien/resin/king_cocoon/proc/announce_halfway()
-	marine_announcement("ВНИМАНИЕ.\n\nБЫЛО ОБНАРУЖЕНО НЕОБЫЧНОЕ НАКОПЛЕНИЕ ЭНЕРГИИ В [uppertext(get_area_name(loc))].\n\nРАСЧЕТНОЕ ВРЕМЯ ДО ЗАВЕРШЕНИЯ - 5 МИНУТ. РЕКОМЕНДУЕТСЯ ЛИКВИДИРОВАТЬ СООРУЖЕНИЯ КСЕНОМОРФОВ В ЭТОМ УЧАСТКЕ, ИЛИ ЛИКВИДИРОВАТЬ ПИЛОН КСЕНОМОРФОВ НА ЛЮБОМ ИЗ КОММУНИКАЦИОННЫХ РЕЛЕ.", "[MAIN_AI_SYSTEM]: Биологический сканер", 'sound/misc/notice1.ogg')
+	marine_announcement("ВНИМАНИЕ.\n\nБЫЛО ОБНАРУЖЕНО НЕОБЫЧНОЕ НАКОПЛЕНИЕ ЭНЕРГИИ В [uppertext(get_area_name(loc))].\n\nРАСЧЕТНОЕ ВРЕМЯ ДО ЗАВЕРШЕНИЯ - 5 МИНУТ. РЕКОМЕНДУЕТСЯ ЛИКВИДИРОВАТЬ СООРУЖЕНИЯ КСЕНОМОРФОВ В ЭТОМ УЧАСТКЕ, ИЛИ ЛИКВИДИРОВАТЬ ПИЛОН КСЕНОМОРФОВ НА ЛЮБОМ ИЗ КОММУНИКАЦИОННЫХ РЕЛЕ.", "[MAIN_AI_SYSTEM]: Биологическое сканирование", 'sound/misc/notice1.ogg')
 	var/datum/hive_status/hive
 	for(var/cur_hive_num in GLOB.hive_datum)
 		hive = GLOB.hive_datum[cur_hive_num]
@@ -1111,7 +1111,7 @@
  * * voting_candidates: A list of xenomorph mobs that are candidates
  */
 /obj/effect/alien/resin/king_cocoon/proc/cast_vote(mob/candidate, list/mob/living/carbon/xenomorph/voting_candidates)
-	var/mob/living/carbon/xenomorph/choice = tgui_input_list(candidate, "Vote for a sister you wish to become the King.", "Choose a xeno", voting_candidates , 20 SECONDS)
+	var/mob/living/carbon/xenomorph/choice = tgui_input_list(candidate, "Проголосуйте за сестру, которую вы хотите сделать Королем.", "Выберите ксеноморфа", voting_candidates , 20 SECONDS)
 
 	if(votes[choice])
 		votes[choice] += 1
@@ -1218,7 +1218,7 @@
 		animate_hatch_king()
 		return
 
-	marine_announcement("ВНИМАНИЕ.\n\nБЫЛО ОБНАРУЖЕНО НЕОБЫЧНОЕ НАКОПЛЕНИЕ ЭНЕРГИИ В [get_area_name(loc)].\n\nРАСЧЕТНОЕ ВРЕМЯ ДО ЗАВЕРШЕНИЯ - 20 СЕКУНД. РЕКОМЕНДУЕТСЯ ЛИКВИДИРОВАТЬ СООРУЖЕНИЯ КСЕНОМОРФОВ В ЭТОМ УЧАСТКЕ, ИЛИ ЛИКВИДИРОВАТЬ ПИЛОН КСЕНОМОРФОВ НА ЛЮБОМ ИЗ КОММУНИКАЦИОННЫХ РЕЛЕ.", "[MAIN_AI_SYSTEM]: Биологический сканер", 'sound/misc/notice1.ogg')
+	marine_announcement("ВНИМАНИЕ.\n\nБЫЛО ОБНАРУЖЕНО НЕОБЫЧНОЕ НАКОПЛЕНИЕ ЭНЕРГИИ В [get_area_name(loc)].\n\nРАСЧЕТНОЕ ВРЕМЯ ДО ЗАВЕРШЕНИЯ - 20 СЕКУНД. РЕКОМЕНДУЕТСЯ ЛИКВИДИРОВАТЬ СООРУЖЕНИЯ КСЕНОМОРФОВ В ЭТОМ УЧАСТКЕ, ИЛИ ЛИКВИДИРОВАТЬ ПИЛОН КСЕНОМОРФОВ НА ЛЮБОМ ИЗ КОММУНИКАЦИОННЫХ РЕЛЕ.", "[MAIN_AI_SYSTEM]: Биологическое сканирование", 'sound/misc/notice1.ogg')
 	var/datum/hive_status/hive
 	for(var/cur_hive_num in GLOB.hive_datum)
 		hive = GLOB.hive_datum[cur_hive_num]
@@ -1234,7 +1234,7 @@
 	flick("hatching", src)
 	addtimer(CALLBACK(src, PROC_REF(hatch_king)), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
-	marine_announcement("ВНИМАНИЕ.\n\nЗАФИКСИРОВАН ЭКСТРЕМАЛЬНЫЙ ПОТОК ЭНЕРГИИ В [get_area_name(loc)].\n\nБУДЬТЕ БДИТЕЛЬНЫ.", "[MAIN_AI_SYSTEM]: Биологический сканер", 'sound/misc/notice1.ogg')
+	marine_announcement("ВНИМАНИЕ.\n\nЗАФИКСИРОВАН ЭКСТРЕМАЛЬНЫЙ ПОТОК ЭНЕРГИИ В [get_area_name(loc)].\n\nБУДЬТЕ БДИТЕЛЬНЫ.", "[MAIN_AI_SYSTEM]: Биологическое сканирование", 'sound/misc/notice1.ogg')
 	var/datum/hive_status/hive
 	for(var/cur_hive_num in GLOB.hive_datum)
 		hive = GLOB.hive_datum[cur_hive_num]
@@ -1283,7 +1283,7 @@
 
 /obj/item/explosive/grenade/alien
 	name = "alien grenade"
-	desc = "an alien grenade."
+	desc = "инопланетная граната."
 	icon_state = "neuro_nade_greyscale"
 	item_state = "neuro_nade_greyscale"
 
@@ -1307,7 +1307,7 @@
 
 /obj/item/explosive/grenade/alien/try_to_throw(mob/living/user)
 	if(isxeno(user))
-		to_chat(user, SPAN_NOTICE("You prepare to throw [src]."))
+		to_chat(user, SPAN_NOTICE("Вы готовитесь бросить [src.declent_ru(ACCUSATIVE)]."))
 		if(!do_after(user, xeno_throw_time, INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_HOSTILE))
 			return FALSE
 		activate(user)
@@ -1315,10 +1315,10 @@
 
 /obj/item/explosive/grenade/alien/can_use_grenade(mob/user)
 	if(!isxeno(user))
-		to_chat(user, SPAN_WARNING("You don't know how to activate this!"))
+		to_chat(user, SPAN_WARNING("Вы не знаете, как это активировать!"))
 		return FALSE
 
-	to_chat(user, SPAN_XENOWARNING("You need to throw this to activate it!"))
+	to_chat(user, SPAN_XENOWARNING("Вам нужно бросить это, чтобы активировать его!"))
 	return FALSE
 
 /obj/item/explosive/grenade/alien/update_icon()
@@ -1336,12 +1336,12 @@
 	if(!active)
 		attack_hand(M)
 	else
-		to_chat(M, SPAN_XENOWARNING("It's about to burst!"))
+		to_chat(M, SPAN_XENOWARNING("Она вот-вот разорвется!"))
 	return XENO_NO_DELAY_ACTION
 
 /obj/item/explosive/grenade/alien/acid
 	name = "acid grenade"
-	desc = "Sprays acid projectiles outwards when detonated."
+	desc = "Выстреливает кислотные снаряды при детонации."
 
 	color = "#00ff00"
 

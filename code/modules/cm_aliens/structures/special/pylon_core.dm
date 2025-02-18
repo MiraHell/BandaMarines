@@ -164,7 +164,7 @@
 		if(hijack_delete)
 			return ..()
 
-		marine_announcement("ВНИМАНИЕ.\n\nНакопление энергии вокруг коммуникационного реле в [get_area_name(src)] остановлено.", "[MAIN_AI_SYSTEM]: Биологический сканер")
+		marine_announcement("ВНИМАНИЕ.\n\nНакопление энергии вокруг коммуникационного реле в [get_area_name(src)] остановлено.", "[MAIN_AI_SYSTEM]: Биологическое сканирование")
 
 		for(var/hivenumber in GLOB.hive_datum)
 			var/datum/hive_status/checked_hive = GLOB.hive_datum[hivenumber]
@@ -180,7 +180,7 @@
 
 /// Checks if all comms towers are connected and then starts end game content on all pylons if they are
 /obj/effect/alien/resin/special/pylon/endgame/proc/comms_relay_connection()
-	marine_announcement("ВНИМАНИЕ.\n\nНерегулярное накопление энергии вокруг коммуникационных реле в [get_area_name(src)], обнаружена биологическая угроза.\n\nТРЕВОГА: Возникает опасность усиления ксеноморфов, рекомендация: срочно ликвидировать угрозу наземными силами.", "[MAIN_AI_SYSTEM]: Биологический сканер")
+	marine_announcement("ВНИМАНИЕ.\n\nНерегулярное накопление энергии вокруг коммуникационных реле в [get_area_name(src)], обнаружена биологическая угроза.\n\nТРЕВОГА: Возникает опасность усиления ксеноморфов, рекомендация: срочно ликвидировать угрозу наземными силами.", "[MAIN_AI_SYSTEM]: Биологическое сканирование")
 
 	for(var/hivenumber in GLOB.hive_datum)
 		var/datum/hive_status/checked_hive = GLOB.hive_datum[hivenumber]
